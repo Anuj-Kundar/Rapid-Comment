@@ -63,100 +63,99 @@ const Comment = ({
   };
   return (
     <div key={comment.id} className="comment">
-    <div className="comment-image-container">
-      <img src="/user-icon.png" />
-    </div>
-    <div className="comment-right-part">
-      <div className="comment-content">
-        <div className="comment-author">{comment.username}</div>
-        <div>{createdAt}</div>
+      <div className="comment-image-container">
+        <img src="/user-icon.png" />
       </div>
-      {!isEditing && <div className="comment-text">{comment.body}</div>}
-      {isEditing && (
-        <CommentForm
-          submitLabel="Update"
-          hasCancelButton
-          initialText={comment.body}
-          handleSubmit={(text) => updateComment(text, comment.id)}
-          handleCancel={() => {
-            setActiveComment(null);
-          }}
-        />
-      )}
-      <div className="comment-actions">
-        {canReply && (
-          <div
-            className="comment-action"
-            onClick={() => setActiveComment({ id: comment.id, type: "replying" })}
-          >
-            Reply
-          </div>
-        )}
-        {canEdit && (
-          <div
-            className="comment-action"
-            onClick={() =>
-              setActiveComment({ id: comment.id, type: "editing" })
-            }
-          >
-            Edit
-          </div>
-        )}
-        {canDelete && (
-          <div className="comment-action" onClick={() => deleteComment(comment.id)}>
-            Delete
-          </div>
-        )}
-      </div>
-      <div className="upvote-downvote-actions">
-      <button onClick={handleLikeClick}>
-        <img src={up} alt="up" style={{ 
-        width: '20px', 
-        height: '20px', 
-        objectFit: 'cover' }} />
-        
-
-      <span>{likes}</span>
-      </button>
-      
-      
-      <button onClick={handleDislikeClick}>
-      <img src={down} alt="up"   style={{ 
-        width: '20px', 
-        height: '20px', 
-        objectFit: 'cover' 
-      }} />
-
-      <span>{dislikes}</span>
-      </button>
-        
-      </div>
-      {isReplying && (
-        <CommentForm
-          submitLabel="Reply"
-          handleSubmit={(text) => addComment(text, replyId)}
-        />
-      )}
-      {replies.length > 0 && (
-        <div className="replies">
-          {replies.map((reply) => (
-            <Comment
-              comment={reply}
-              key={reply.id}
-              setActiveComment={setActiveComment}
-              activeComment={activeComment}
-              updateComment={updateComment}
-              deleteComment={deleteComment}
-              addComment={addComment}
-              parentId={comment.id}
-              replies={[]}
-              currentUserId={currentUserId}
-            />
-          ))}
+      <div className="comment-right-part">
+        <div className="comment-content">
+          <div className="comment-author">{comment.username}</div>
+          <div>{createdAt}</div>
         </div>
-      )}
+        {!isEditing && <div className="comment-text">{comment.body}</div>}
+        {isEditing && (
+          <CommentForm
+            submitLabel="Update"
+            hasCancelButton
+            initialText={comment.body}
+            handleSubmit={(text) => updateComment(text, comment.id)}
+            handleCancel={() => {
+              setActiveComment(null);
+            }}
+          />
+        )}
+        <div className="comment-actions">
+          {canReply && (
+            <div
+              className="comment-action"
+              onClick={() => setActiveComment({ id: comment.id, type: "replying" })}
+            >
+              Reply
+            </div>
+          )}
+          {canEdit && (
+            <div
+              className="comment-action"
+              onClick={() =>
+                setActiveComment({ id: comment.id, type: "editing" })
+              }
+            >
+              Edit
+            </div>
+          )}
+          {canDelete && (
+            <div className="comment-action" onClick={() => deleteComment(comment.id)}>
+              Delete
+            </div>
+          )}
+        </div>
+        <div className="upvote-downvote-actions"><span>
+
+          <img src={up} alt="up" style={{
+            width: '40px',
+            height: '40px',
+            objectFit: 'cover'
+          }} onClick={handleLikeClick} />
+
+
+          {likes}</span>
+
+
+          <span>
+            <img src={down} alt="up" style={{
+              width: '40px',
+              height: '40px',
+              objectFit: 'cover'
+            }} onClick={handleDislikeClick} />
+
+            {dislikes}</span>
+
+        </div>
+        {isReplying && (
+          <CommentForm
+            submitLabel="Reply"
+            handleSubmit={(text) => addComment(text, replyId)}
+          />
+        )}
+        {replies.length > 0 && (
+          <div className="replies">
+            {replies.map((reply) => (
+              <Comment
+                comment={reply}
+                key={reply.id}
+                setActiveComment={setActiveComment}
+                activeComment={activeComment}
+                updateComment={updateComment}
+                deleteComment={deleteComment}
+                addComment={addComment}
+                parentId={comment.id}
+                replies={[]}
+                currentUserId={currentUserId}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
   );
 };
 
